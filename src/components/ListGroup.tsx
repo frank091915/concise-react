@@ -1,6 +1,11 @@
-import { MouseEvent, useState } from "react";
-function ListGroup() {
-  let cities = ["New York", "San Francisco", "Tokyo", "Paris"];
+import { useState } from "react";
+
+interface Props{
+  items: string [];
+  heading: string;
+}
+
+function ListGroup({items: cities, heading}: Props) {
   const [selectedIndex, setSelectedIndex] = useState(0)
   const message = (customMessage?: string) =>
     cities.length && <p>{customMessage && "No Item Found"}</p>;
@@ -9,7 +14,7 @@ function ListGroup() {
   };
   return (
     <>
-      <h1>Cites</h1>
+      <h1>{heading}</h1>
       {message()}
       <ul className="list-group">
         {cities.map((item, index) => (
