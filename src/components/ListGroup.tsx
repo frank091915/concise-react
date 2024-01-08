@@ -1,16 +1,17 @@
 import { useState } from "react";
 
-interface Props{
-  items: string [];
+interface Props {
+  items: string[];
   heading: string;
+  onSelected: (item: string) => void;
 }
 
-function ListGroup({items: cities, heading}: Props) {
-  const [selectedIndex, setSelectedIndex] = useState(0)
+function ListGroup({ items: cities, heading, onSelected }: Props) {
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const message = (customMessage?: string) =>
     cities.length && <p>{customMessage && "No Item Found"}</p>;
   const handleClick = (index: number) => {
-    setSelectedIndex(index)
+    setSelectedIndex(index);
   };
   return (
     <>
@@ -18,7 +19,18 @@ function ListGroup({items: cities, heading}: Props) {
       {message()}
       <ul className="list-group">
         {cities.map((item, index) => (
-          <li key={item} onClick={() => handleClick(index)} className={selectedIndex === index ? "list-group-item active" : 'list-group-item'}>
+          <li
+            key={item}
+            onClick={() => {
+              handleClick(index);
+              onSelected(item);
+            }}
+            className={
+              selectedIndex === index
+                ? "list-group-item active"
+                : "list-group-item"
+            }
+          >
             {item}
           </li>
         ))}
